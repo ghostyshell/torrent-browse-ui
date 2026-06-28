@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0B1120" />
+
+  <title>Privacy Policy — stream-frontend</title>
+  <meta name="description" content="Privacy policy for stream-frontend: what data is stored locally in your browser, what is sent to the backend, and how your Real-Debrid API key is handled." />
+  <meta name="robots" content="index, follow" />
+
+  <link rel="canonical" href="https://akshatsinghkaushik.github.io/stream-frontend/privacy.html" />
+  <link rel="icon" href="/stream-frontend/site/favicon.svg" type="image/svg+xml" />
+  <link rel="manifest" href="/stream-frontend/site/site.webmanifest" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500&display=swap" />
+
+  <script>
+    window.tailwind = {
+      config: {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              canvas: '#0B1120',
+              surface: '#0F172A',
+              primary: '#E11D48',
+              secondary: '#FB7185',
+              cta: '#2563EB',
+              fg: '#F8FAFC',
+              muted: '#1E293B',
+              border: '#334155',
+            },
+            fontFamily: {
+              display: ['Sora', 'system-ui', 'sans-serif'],
+              body: ['Inter', 'system-ui', 'sans-serif'],
+            },
+          },
+        },
+      },
+    };
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :focus-visible { outline: 2px solid #E11D48; outline-offset: 3px; }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+  </style>
+</head>
+<body class="bg-canvas text-fg font-body antialiased">
+
+  <!-- Skip link -->
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded">
+    Skip to main content
+  </a>
+
+  <!-- Header -->
+  <header class="border-b border-border bg-surface/80 backdrop-blur sticky top-0 z-40" role="banner">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 py-4 flex items-center gap-4">
+      <a href="/stream-frontend/" class="flex items-center gap-2 group" aria-label="stream-frontend home">
+        <svg class="w-8 h-8 flex-shrink-0" viewBox="0 0 64 64" fill="none" aria-hidden="true" focusable="false">
+          <rect width="64" height="64" rx="12" fill="#0B1120"/>
+          <circle cx="32" cy="32" r="18" stroke="#E11D48" stroke-width="3"/>
+          <circle cx="32" cy="32" r="8" fill="#E11D48"/>
+        </svg>
+        <span class="font-display font-semibold text-fg text-lg group-hover:text-secondary transition-colors">stream-frontend</span>
+      </a>
+      <span class="ml-auto text-sm text-border">Privacy Policy</span>
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <main id="main" class="max-w-3xl mx-auto px-4 sm:px-6 py-12">
+    <h1 class="font-display text-3xl sm:text-4xl font-bold text-fg mb-2">Privacy Policy</h1>
+    <p class="text-border text-sm mb-10">Last updated: June 2026</p>
+
+    <div class="space-y-10 text-fg/90 leading-relaxed">
+
+      <section aria-labelledby="overview-heading">
+        <h2 id="overview-heading" class="font-display text-xl font-semibold text-fg mb-3">Overview</h2>
+        <p>
+          stream-frontend is an open-source web application. This policy explains what information is stored
+          in your browser, what is transmitted to the backend API you configure, and how your credentials are handled.
+          There is no analytics, no advertising, and no data sale.
+        </p>
+      </section>
+
+      <section aria-labelledby="local-heading">
+        <h2 id="local-heading" class="font-display text-xl font-semibold text-fg mb-3">What is Stored Locally in Your Browser</h2>
+
+        <div class="space-y-4">
+          <div class="bg-surface border border-border rounded-xl p-5">
+            <h3 class="font-semibold text-secondary mb-2">Session Token (<code class="text-xs bg-muted px-1 rounded">sessionStorage</code>)</h3>
+            <p class="text-sm text-fg/80">
+              After you log in, a short-lived bearer token is stored in <code>sessionStorage</code>.
+              It is cleared automatically when you close the browser tab or call logout.
+              It is never written to <code>localStorage</code> or cookies on the client side.
+            </p>
+          </div>
+
+          <div class="bg-surface border border-border rounded-xl p-5">
+            <h3 class="font-semibold text-secondary mb-2">Cached Links Snapshot (<code class="text-xs bg-muted px-1 rounded">localStorage</code>)</h3>
+            <p class="text-sm text-fg/80">
+              When backend-first storage is active, a local copy of your stored links (magnet URLs,
+              resolved stream URLs, titles, timestamps) is written to <code>localStorage</code> as a
+              performance cache. The authoritative copy lives on your backend. You can clear this at any
+              time by clearing your browser's site data.
+            </p>
+          </div>
+
+          <div class="bg-surface border border-border rounded-xl p-5">
+            <h3 class="font-semibold text-secondary mb-2">Storage Configuration (<code class="text-xs bg-muted px-1 rounded">localStorage</code>)</h3>
+            <p class="text-sm text-fg/80">
+              The app's storage strategy settings (backend-first, localStorage fallback, backend-only mode)
+              are persisted in <code>localStorage</code> under the key <code>torrent_storage_config</code>.
+            </p>
+          </div>
+
+          <div class="bg-surface border border-border rounded-xl p-5">
+            <h3 class="font-semibold text-secondary mb-2">Cover Image URLs (<code class="text-xs bg-muted px-1 rounded">localStorage</code>, legacy)</h3>
+            <p class="text-sm text-fg/80">
+              In older versions, cover image URLs were cached in <code>localStorage</code>. Current versions
+              store them on the backend instead. A one-time migration prompt offers to move any remaining
+              local cover URLs to the backend.
+            </p>
+          </div>
+
+          <div class="bg-surface border border-border rounded-xl p-5">
+            <h3 class="font-semibold text-secondary mb-2">In-Memory Caches (runtime only)</h3>
+            <p class="text-sm text-fg/80">
+              Torrent detail pages, magnet links, and resolved stream URLs are kept in memory during your
+              session to avoid redundant API calls. These are discarded when the page is closed.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="backend-heading">
+        <h2 id="backend-heading" class="font-display text-xl font-semibold text-fg mb-3">What is Sent to the Backend</h2>
+        <p class="mb-4">
+          Every data operation — favourites, stored links, cover images, torrent searches — is sent to
+          the backend API at the URL you configure in <code>REACT_APP_API_URL</code>. You control where
+          this backend runs. The frontend project does not ship with or operate any shared backend.
+        </p>
+        <ul class="space-y-2 text-sm text-fg/80 list-disc list-inside">
+          <li>Your Google account email and profile information (used for authentication and the allow-list check).</li>
+          <li>Search queries you type and the torrent sites you select.</li>
+          <li>Magnet links and direct stream URLs you add to your stored links.</li>
+          <li>Cover image URLs you associate with torrents.</li>
+          <li>Requests to the Real-Debrid proxy endpoint (your API key is stored server-side and never sent from the browser).</li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="realdebrid-heading">
+        <h2 id="realdebrid-heading" class="font-display text-xl font-semibold text-fg mb-3">Real-Debrid API Key</h2>
+        <div class="bg-surface border border-primary/30 rounded-xl p-5">
+          <p class="text-sm text-fg/90">
+            Your Real-Debrid API key is <strong class="text-secondary">stored server-side only</strong> — it is
+            saved to your backend's database when you submit it in Account Settings and is never written to
+            <code>localStorage</code>, <code>sessionStorage</code>, or any browser cookie. All Real-Debrid API
+            calls are proxied through the backend; the browser only receives the resolved stream URL.
+          </p>
+          <p class="text-sm text-fg/80 mt-3">
+            You can remove your Real-Debrid key at any time from the Account Settings page, which instructs the
+            backend to delete it from its database.
+          </p>
+        </div>
+      </section>
+
+      <section aria-labelledby="incognito-heading">
+        <h2 id="incognito-heading" class="font-display text-xl font-semibold text-fg mb-3">Incognito / Private Browsing</h2>
+        <p class="text-sm text-fg/80">
+          When the app detects that it is running in a private browsing context (where <code>localStorage</code>
+          is unavailable or severely quota-limited), it automatically switches to backend-only mode. In this mode,
+          no data is written to the browser at all — everything is stored on the backend and retrieved on each
+          page load. A notification banner is shown when this mode is active.
+        </p>
+      </section>
+
+      <section aria-labelledby="contact-heading">
+        <h2 id="contact-heading" class="font-display text-xl font-semibold text-fg mb-3">Contact</h2>
+        <p class="text-sm text-fg/80">
+          This is an open-source project. For questions about data handling, open an issue on the
+          <a href="https://github.com/akshatsinghkaushik/stream-frontend" class="text-cta underline hover:text-secondary transition-colors">GitHub repository</a>.
+        </p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-border bg-surface mt-16 py-8" role="contentinfo">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center text-sm text-border space-y-2">
+      <p>
+        <a href="/stream-frontend/" class="hover:text-secondary transition-colors">Home</a>
+        <span class="mx-2">·</span>
+        <a href="https://github.com/akshatsinghkaushik/stream-frontend" class="hover:text-secondary transition-colors">GitHub</a>
+        <span class="mx-2">·</span>
+        <a href="/stream-frontend/privacy.html" class="text-fg/60 hover:text-secondary transition-colors">Privacy</a>
+      </p>
+      <p>Licensed under GPL-3.0-or-later</p>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,939 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0B1120" />
+  <meta name="color-scheme" content="dark" />
+
+  <title>stream-frontend — Open-source torrent search and streaming UI</title>
+  <meta name="description" content="stream-frontend is a React 19 web UI for searching torrents across multiple indexers and streaming them via Real-Debrid. Self-hostable with Docker. Backend-first storage with localStorage fallback." />
+  <meta name="keywords" content="torrent search UI, React torrent, Real-Debrid frontend, self-hosted streaming, open source torrent, piratebay frontend, 1337x UI, YTS frontend, Docker torrent UI" />
+  <meta name="author" content="akshatsinghkaushik" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+  <link rel="canonical" href="https://akshatsinghkaushik.github.io/stream-frontend/" />
+  <link rel="icon" href="/stream-frontend/site/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/stream-frontend/site/favicon.svg" />
+  <link rel="manifest" href="/stream-frontend/site/site.webmanifest" />
+  <link rel="sitemap" type="application/xml" href="/stream-frontend/site/sitemap.xml" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="stream-frontend" />
+  <meta property="og:title" content="stream-frontend — Open-source torrent search and streaming UI" />
+  <meta property="og:description" content="React 19 web UI for torrent search across multiple indexers with Real-Debrid streaming support. Self-hostable with Docker in minutes." />
+  <meta property="og:url" content="https://akshatsinghkaushik.github.io/stream-frontend/" />
+  <meta property="og:image" content="https://akshatsinghkaushik.github.io/stream-frontend/site/og-image.svg" />
+  <meta property="og:image:alt" content="stream-frontend — dark media app UI showing torrent search and streaming" />
+  <meta property="og:image:type" content="image/svg+xml" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="stream-frontend — Open-source torrent search and streaming UI" />
+  <meta name="twitter:description" content="React 19 UI for torrent search and Real-Debrid streaming. Self-hostable with Docker." />
+  <meta name="twitter:image" content="https://akshatsinghkaushik.github.io/stream-frontend/site/og-image.svg" />
+  <meta name="twitter:image:alt" content="stream-frontend app landing page" />
+
+  <!-- Resource hints -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="dns-prefetch" href="https://github.com" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" />
+
+  <!-- Tailwind Play CDN — config must be set BEFORE the CDN script tag -->
+  <script>
+    window.tailwind = {
+      config: {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              canvas:    '#0B1120',
+              surface:   '#0F172A',
+              primary:   '#E11D48',
+              secondary: '#FB7185',
+              cta:       '#2563EB',
+              ctahover:  '#1D4ED8',
+              fg:        '#F8FAFC',
+              muted:     '#1E293B',
+              border:    '#334155',
+              dim:       '#64748B',
+            },
+            fontFamily: {
+              display: ['Sora', 'system-ui', 'sans-serif'],
+              body:    ['Inter', 'system-ui', 'sans-serif'],
+            },
+            boxShadow: {
+              'rose-glow':  '0 0 0 1px rgba(225,29,72,0.3), 0 0 28px rgba(225,29,72,0.18)',
+              'blue-glow':  '0 0 0 1px rgba(37,99,235,0.3), 0 0 28px rgba(37,99,235,0.18)',
+            },
+          },
+        },
+      },
+    };
+  </script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+
+  <!-- JSON-LD: SoftwareApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "stream-frontend",
+    "applicationCategory": "MultimediaApplication",
+    "applicationSubCategory": "Torrent Search and Streaming",
+    "operatingSystem": "Any (browser-based)",
+    "url": "https://akshatsinghkaushik.github.io/stream-frontend/",
+    "codeRepository": "https://github.com/akshatsinghkaushik/stream-frontend",
+    "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "author": { "@type": "Person", "name": "akshatsinghkaushik", "url": "https://github.com/akshatsinghkaushik" },
+    "description": "An open-source React 19 web UI for searching torrents across multiple indexers (PirateBay, YTS, 1337x, and more) and streaming them directly via Real-Debrid. Supports favourites, cached links, cover images, and Google Cast.",
+    "image": "https://akshatsinghkaushik.github.io/stream-frontend/site/og-image.svg",
+    "featureList": [
+      "Multi-indexer torrent search (PirateBay, YTS, 1337x, Nyaasi, LimeTorrent)",
+      "Real-Debrid integration for premium streaming",
+      "Favourites with backend-first storage",
+      "Cached/stored links with stream URL refresh",
+      "Cover image management with backend hosting",
+      "Google Cast (Chromecast) support",
+      "Docker-ready with nginx",
+      "Mobile-optimised build target",
+      "GPL-3.0 open source"
+    ]
+  }
+  </script>
+
+  <!-- JSON-LD: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What backend does this UI require?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "stream-frontend requires a compatible torrent-search and streaming backend API, configured via the REACT_APP_API_URL environment variable. The frontend does not include or operate a backend."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is a Real-Debrid account required?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. You can search and browse torrents without Real-Debrid. Real-Debrid integration is optional and enables direct stream URL resolution for magnet links."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I deploy it?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Build the Docker image with your backend URL as a build argument and run it. The image uses nginx to serve the React SPA with SPA route fallback and security headers included."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where is my Real-Debrid API key stored?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Your Real-Debrid API key is stored server-side only. It is never written to localStorage, sessionStorage, or any browser cookie. All Real-Debrid API calls are proxied through the backend."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- JSON-LD: WebSite -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "stream-frontend",
+    "url": "https://akshatsinghkaushik.github.io/stream-frontend/"
+  }
+  </script>
+
+  <style>
+    /* Focus ring */
+    :focus-visible { outline: 2px solid #E11D48; outline-offset: 3px; }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+    }
+
+    /* Gradient text utility */
+    .gradient-text {
+      background: linear-gradient(135deg, #E11D48 0%, #FB7185 50%, #2563EB 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Subtle scanline overlay on browser mockup */
+    .scanlines::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(0,0,0,0.08) 3px,
+        rgba(0,0,0,0.08) 4px
+      );
+      pointer-events: none;
+      border-radius: inherit;
+    }
+
+    /* Discord & Ko-fi buttons */
+    .discord-btn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; background: rgba(30,41,59,0.5); border: 1px solid #334155; border-radius: 10px; color: #F8FAFC; font-size: 13px; font-weight: 600; text-decoration: none; transition: all 0.15s; }
+    .discord-btn:hover { background: rgba(30,41,59,0.8); border-color: #5865F2; }
+    .discord-btn svg { width: 18px; height: 18px; fill: #5865F2; }
+    .kofi-btn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; background: rgba(30,41,59,0.5); border: 1px solid #334155; border-radius: 10px; color: #F8FAFC; font-size: 13px; font-weight: 600; text-decoration: none; transition: all 0.15s; }
+    .kofi-btn:hover { background: rgba(30,41,59,0.8); border-color: #FF5E5B; }
+    .kofi-btn svg { width: 18px; height: 18px; fill: #FF5E5B; }
+  </style>
+</head>
+
+<body class="bg-canvas text-fg font-body antialiased">
+
+  <!-- Skip link -->
+  <a href="#main"
+     class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-lg focus:shadow-rose-glow">
+    Skip to main content
+  </a>
+
+  <!-- ============================================================
+       HEADER / NAV
+       ============================================================ -->
+  <header class="sticky top-0 z-40 border-b border-border bg-surface/80 backdrop-blur-md" role="banner">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center gap-6">
+      <!-- Logo -->
+      <a href="/stream-frontend/" class="flex items-center gap-2 group" aria-label="stream-frontend home">
+        <svg class="w-8 h-8 flex-shrink-0" viewBox="0 0 64 64" fill="none" aria-hidden="true" focusable="false">
+          <rect width="64" height="64" rx="12" fill="#0B1120"/>
+          <circle cx="32" cy="32" r="18" stroke="#E11D48" stroke-width="3"/>
+          <circle cx="32" cy="32" r="8" fill="#E11D48"/>
+          <line x1="32" y1="14" x2="32" y2="8" stroke="#FB7185" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="32" y1="56" x2="32" y2="50" stroke="#FB7185" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="14" y1="32" x2="8" y2="32" stroke="#FB7185" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="56" y1="32" x2="50" y2="32" stroke="#FB7185" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <span class="font-display font-semibold text-lg text-fg group-hover:text-secondary transition-colors">stream-frontend</span>
+      </a>
+
+      <!-- Nav links -->
+      <nav class="hidden sm:flex items-center gap-1 ml-4" aria-label="Site navigation">
+        <a href="#features" class="px-3 py-1.5 text-sm text-dim hover:text-fg rounded-lg hover:bg-muted transition-colors">Features</a>
+        <a href="#how-it-works" class="px-3 py-1.5 text-sm text-dim hover:text-fg rounded-lg hover:bg-muted transition-colors">How it works</a>
+        <a href="#quickstart" class="px-3 py-1.5 text-sm text-dim hover:text-fg rounded-lg hover:bg-muted transition-colors">Quickstart</a>
+        <a href="#faq" class="px-3 py-1.5 text-sm text-dim hover:text-fg rounded-lg hover:bg-muted transition-colors">FAQ</a>
+      </nav>
+
+      <!-- GitHub CTA -->
+      <a href="https://github.com/akshatsinghkaushik/stream-frontend"
+         class="ml-auto flex items-center gap-2 px-4 py-2 bg-muted hover:bg-border rounded-lg text-sm font-medium text-fg transition-colors"
+         aria-label="View stream-frontend on GitHub">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+        GitHub
+      </a>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       MAIN CONTENT
+       ============================================================ -->
+  <main id="main">
+
+    <!-- ============================================================
+         HERO
+         ============================================================ -->
+    <section class="relative overflow-hidden py-20 sm:py-28 lg:py-36" aria-labelledby="hero-heading">
+
+      <!-- Background radial glow -->
+      <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-primary/10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 right-1/4 w-[400px] h-[300px] bg-cta/8 rounded-full blur-3xl"></div>
+      </div>
+
+      <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
+
+        <!-- Left: text -->
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full text-xs font-medium text-secondary mb-6">
+            <span class="w-1.5 h-1.5 bg-secondary rounded-full" aria-hidden="true"></span>
+            Open source &middot; GPL-3.0
+          </div>
+
+          <h1 id="hero-heading" class="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-6">
+            <span class="gradient-text">Torrent search</span><br>
+            that streams
+          </h1>
+
+          <p class="text-lg text-fg/70 mb-8 max-w-xl">
+            A sleek React 19 web UI for browsing multiple torrent indexers, resolving streams via Real-Debrid,
+            and managing your media library — all from a single self-hosted interface.
+          </p>
+
+          <div class="flex flex-wrap gap-3">
+            <a href="https://github.com/akshatsinghkaushik/stream-frontend"
+               class="inline-flex items-center gap-2 px-5 py-3 bg-primary hover:bg-primary/90 text-white font-semibold rounded-xl shadow-rose-glow transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-canvas">
+              <!-- Star icon -->
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+              Star on GitHub
+            </a>
+            <a href="#quickstart"
+               class="inline-flex items-center gap-2 px-5 py-3 bg-cta hover:bg-ctahover text-white font-semibold rounded-xl shadow-blue-glow transition-colors focus:outline-none focus:ring-2 focus:ring-cta focus:ring-offset-2 focus:ring-offset-canvas">
+              <!-- Docker icon -->
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <rect x="2" y="10" width="4" height="4" rx="1"/>
+                <rect x="7" y="10" width="4" height="4" rx="1"/>
+                <rect x="12" y="10" width="4" height="4" rx="1"/>
+                <rect x="7" y="5" width="4" height="4" rx="1"/>
+                <rect x="12" y="5" width="4" height="4" rx="1"/>
+                <path d="M22 11c-.5-1-1.5-1.5-2.5-1.5H18c-.2-2-1.5-3.5-3-4l-.5 1c1 .5 1.5 1.5 1.5 3H2c0 4 2 8 8 8h4c3 0 5.5-1.5 6.5-4 .5-1 .5-2.5.5-2.5z"/>
+              </svg>
+              Deploy with Docker
+            </a>
+          </div>
+
+          <!-- Support links -->
+          <div class="flex flex-wrap gap-3 mt-4">
+            <a href="https://discord.gg/EbHcTNAqca" target="_blank" rel="noopener noreferrer" class="discord-btn">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.891.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+              Join Discord
+            </a>
+            <a href="https://ko-fi.com/ghosty99" target="_blank" rel="noopener noreferrer" class="kofi-btn">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.258 8.363c-.003-.023-.005-.045-.008-.068-.01-.05-.02-.1-.035-.148-.012-.045-.03-.087-.048-.13-.017-.04-.037-.078-.058-.115-.023-.04-.05-.075-.077-.112-.027-.035-.055-.07-.086-.102-.03-.032-.063-.06-.096-.09-.035-.03-.07-.057-.108-.083-.037-.025-.077-.047-.117-.068-.04-.02-.082-.04-.125-.056-.045-.017-.09-.03-.137-.042-.047-.012-.095-.022-.144-.03-.024-.004-.047-.007-.07-.01-.03-.003-.06-.005-.09-.006-.03-.002-.06-.003-.09-.003-.03 0-.06.002-.09.003-.03.002-.06.004-.09.007-.023.002-.046.005-.07.009-.048.008-.096.018-.143.03-.047.012-.093.025-.138.042-.043.016-.084.035-.124.056-.04.02-.08.042-.118.067-.037.025-.073.053-.108.083-.034.028-.066.058-.096.09-.03.032-.058.066-.085.102-.028.036-.054.072-.077.112-.022.037-.042.075-.058.115-.02.043-.036.085-.05.13-.014.048-.024.098-.034.148-.003.023-.005.045-.008.068-.003.023-.005.046-.006.07-.002.03-.003.06-.003.09 0 .03.002.06.003.09.002.03.004.06.007.09.002.023.005.046.009.07.008.048.018.096.03.143.012.047.025.093.042.138.016.043.035.084.056.124.02.04.042.08.067.118.025.037.053.073.083.108.028.034.058.066.09.096.032.03.066.058.102.085.036.028.072.054.112.077.037.022.075.042.115.058.043.02.085.036.13.05.048.014.098.024.148.034.023.003.045.005.068.008.023.003.046.005.07.006.03.002.06.003.09.003.03 0 .06-.002.09-.003.03-.002.06-.004.09-.007.023-.002.046-.005.07-.009.048-.008.096-.018.143-.03.047-.012.093-.025.138-.042.043-.016.084-.035.124-.056.04-.02.08-.042.118-.067.037-.025.073-.053.108-.083.034-.028.066-.058.096-.09.03-.032.058-.066.085-.102.028-.036.054-.072.077-.112.022-.037.042-.075.058-.115.02-.043.036-.085.05-.13.014-.048.024-.098.034-.148.003-.023.005-.045.008-.068.003-.023.005-.046.006-.07.002-.03.003-.06.003-.09 0-.03-.002-.06-.003-.09-.002-.03-.004-.06-.007-.09-.002-.023-.005-.046-.009-.07zM11.67 16.5c-3.73 0-6.75-3.02-6.75-6.75 0-3.73 3.02-6.75 6.75-6.75s6.75 3.02 6.75 6.75c0 3.73-3.02 6.75-6.75 6.75zm0-12c-2.9 0-5.25 2.35-5.25 5.25s2.35 5.25 5.25 5.25 5.25-2.35 5.25-5.25-2.35-5.25-5.25-5.25z"/></svg>
+              Support on Ko-fi
+            </a>
+          </div>
+
+          <div class="flex flex-wrap gap-4 mt-8 text-sm text-dim">
+            <span class="flex items-center gap-1.5">
+              <!-- Check icon -->
+              <svg class="w-4 h-4 text-secondary" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg>
+              No account needed to search
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-secondary" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg>
+              Real-Debrid optional
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-secondary" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg>
+              Fully self-hosted
+            </span>
+          </div>
+        </div>
+
+        <!-- Right: CSS browser/app mockup -->
+        <div class="lg:flex justify-center hidden" aria-hidden="true">
+          <div class="relative w-full max-w-md">
+            <!-- Browser chrome -->
+            <div class="bg-surface rounded-2xl border border-border shadow-2xl overflow-hidden">
+              <!-- Browser top bar -->
+              <div class="bg-muted px-4 py-3 flex items-center gap-3 border-b border-border">
+                <div class="flex gap-1.5">
+                  <span class="w-3 h-3 rounded-full bg-red-500/60"></span>
+                  <span class="w-3 h-3 rounded-full bg-yellow-500/60"></span>
+                  <span class="w-3 h-3 rounded-full bg-green-500/60"></span>
+                </div>
+                <div class="flex-1 bg-canvas rounded-md px-3 py-1 text-xs text-dim truncate">localhost:3000</div>
+              </div>
+              <!-- App UI mockup -->
+              <div class="relative scanlines p-4 space-y-4 bg-canvas">
+                <!-- App header row -->
+                <div class="flex items-center gap-3 pb-3 border-b border-border">
+                  <div class="w-6 h-6 rounded-full bg-primary/80 flex items-center justify-center">
+                    <div class="w-3 h-3 rounded-full bg-canvas"></div>
+                  </div>
+                  <span class="text-xs font-display font-semibold text-fg">stream-frontend</span>
+                  <div class="ml-auto flex gap-2">
+                    <div class="h-5 w-14 rounded-md bg-muted"></div>
+                    <div class="h-5 w-16 rounded-md bg-muted"></div>
+                  </div>
+                </div>
+                <!-- Search bar -->
+                <div class="flex gap-2">
+                  <div class="flex-1 h-9 bg-muted border border-border rounded-lg flex items-center px-3 gap-2">
+                    <div class="w-3.5 h-3.5 rounded-full border border-dim flex-shrink-0"></div>
+                    <div class="h-2 bg-border rounded w-32"></div>
+                  </div>
+                  <div class="h-9 w-24 bg-primary/80 rounded-lg flex items-center justify-center">
+                    <div class="h-2 w-12 bg-white/60 rounded"></div>
+                  </div>
+                </div>
+                <!-- Filter chips -->
+                <div class="flex gap-2 flex-wrap">
+                  <div class="h-7 w-20 bg-muted border border-border rounded-full"></div>
+                  <div class="h-7 w-16 bg-primary/20 border border-primary/40 rounded-full"></div>
+                  <div class="h-7 w-24 bg-muted border border-border rounded-full"></div>
+                  <div class="h-7 w-14 bg-muted border border-border rounded-full"></div>
+                </div>
+                <!-- Result cards -->
+                <div class="space-y-2">
+                  <div class="bg-surface border border-border rounded-xl p-3 flex gap-3">
+                    <div class="w-10 h-14 bg-muted rounded-md flex-shrink-0 bg-gradient-to-br from-primary/30 to-muted"></div>
+                    <div class="flex-1 space-y-1.5 min-w-0">
+                      <div class="h-2.5 bg-border rounded w-3/4"></div>
+                      <div class="h-2 bg-muted rounded w-1/2"></div>
+                      <div class="flex gap-2 mt-2">
+                        <div class="h-4 w-10 bg-green-900/50 border border-green-700/40 rounded text-center">
+                          <div class="h-1.5 bg-green-500/60 rounded mx-1 mt-1.5"></div>
+                        </div>
+                        <div class="h-4 w-10 bg-muted rounded"></div>
+                      </div>
+                    </div>
+                    <div class="w-6 h-6 rounded-full border border-border flex-shrink-0 flex items-center justify-center">
+                      <div class="w-2.5 h-2.5 text-secondary">
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="text-secondary/60"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="bg-surface border border-border rounded-xl p-3 flex gap-3 opacity-70">
+                    <div class="w-10 h-14 bg-muted rounded-md flex-shrink-0 bg-gradient-to-br from-cta/20 to-muted"></div>
+                    <div class="flex-1 space-y-1.5 min-w-0">
+                      <div class="h-2.5 bg-border rounded w-2/3"></div>
+                      <div class="h-2 bg-muted rounded w-2/5"></div>
+                    </div>
+                  </div>
+                  <div class="bg-surface border border-border rounded-xl p-3 flex gap-3 opacity-40">
+                    <div class="w-10 h-14 bg-muted rounded-md flex-shrink-0"></div>
+                    <div class="flex-1 space-y-1.5 min-w-0">
+                      <div class="h-2.5 bg-border rounded w-4/5"></div>
+                      <div class="h-2 bg-muted rounded w-1/3"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Floating stream badge -->
+            <div class="absolute -bottom-4 -right-4 bg-surface border border-border rounded-xl px-4 py-2.5 shadow-xl flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse"></span>
+              <span class="text-xs font-semibold text-fg">Streaming via Real-Debrid</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         FEATURE GRID
+         ============================================================ -->
+    <section id="features" class="py-20 bg-surface/30" aria-labelledby="features-heading">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-14">
+          <h2 id="features-heading" class="font-display text-3xl sm:text-4xl font-bold text-fg mb-3">
+            Everything you need
+          </h2>
+          <p class="text-fg/60 text-lg max-w-xl mx-auto">
+            One interface for searching, streaming, bookmarking, and managing your torrent media.
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+          <!-- Feature: Multi-indexer search -->
+          <article class="bg-surface border border-border rounded-2xl p-6 hover:border-primary/40 transition-colors group">
+            <div class="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+              <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+            </div>
+            <h3 class="font-display font-semibold text-fg mb-2">Multi-indexer search</h3>
+            <p class="text-sm text-fg/60">Search PirateBay, YTS, 1337x, Nyaasi, LimeTorrent, and more from a single interface. Switch indexers with one click.</p>
+          </article>
+
+          <!-- Feature: Real-Debrid -->
+          <article class="bg-surface border border-border rounded-2xl p-6 hover:border-secondary/40 transition-colors group">
+            <div class="w-11 h-11 rounded-xl bg-secondary/10 flex items-center justify-center mb-4 group-hover:bg-secondary/20 transition-colors">
+              <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+              </svg>
+            </div>
+            <h3 class="font-display font-semibold text-fg mb-2">Real-Debrid streaming</h3>
+            <p class="text-sm text-fg/60">Add a magnet link, get a direct stream URL in seconds. Your API key is stored server-side — never in the browser.</p>
+          </article>
+
+          <!-- Feature: Favourites -->
+          <article class="bg-surface border border-border rounded-2xl p-6 hover:border-primary/40 transition-colors group">
+            <div class="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+              <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </div>
+            <h3 class="font-display font-semibold text-fg mb-2">Favourites</h3>
+            <p class="text-sm text-fg/60">Save torrents to your favourites list. Stored on the backend so your list is available across sessions and devices.</p>
+          </article>
+
+          <!-- Feature: Stored links -->
+          <article class="bg-surface border border-border rounded-2xl p-6 hover:border-cta/40 transition-colors group">
+            <div class="w-11 h-11 rounded-xl bg-cta/10 flex items-center justify-center mb-4 group-hover:bg-cta/20 transition-colors">
+              <svg class="w-5 h-5 text-cta" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+              </svg>
+            </div>
+            <h3 class="font-display font-semibold text-fg mb-2">Cached stream links</h3>
+            <p class="text-sm text-fg/60">Cache resolved stream URLs with automatic expiry detection. One-click refresh all expired magnet links.</p>
+          </article>
+
+          <!-- Feature: Cover images -->
+          <article class="bg-surface border border-border rounded-2xl p-6 hover:border-secondary/40 transition-colors group">
+            <div class="w-11 h-11 rounded-xl bg-secondary/10 flex items-center justify-center mb-4 group-hover:bg-secondary/20 transition-colors">
+              <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+              </svg>
+            </div>
+            <h3 class="font-display font-semibold text-fg mb-2">Cover image management</h3>
+            <p class="text-sm text-fg/60">Automatically fetch and store cover images via the backend image proxy. Search Google Images or paste any URL manually.</p>
+          </article>
+
+          <!-- Feature: Google Cast -->
+          <article class="bg-surface border border-border rounded-2xl p-6 hover:border-cta/40 transition-colors group">
+            <div class="w-11 h-11 rounded-xl bg-cta/10 flex items-center justify-center mb-4 group-hover:bg-cta/20 transition-colors">
+              <svg class="w-5 h-5 text-cta" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M2 16.1A5 5 0 0 1 5.9 20M2 12.05A9 9 0 0 1 9.95 20M2 8V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6"/><line x1="2" y1="20" x2="2.01" y2="20"/>
+              </svg>
+            </div>
+            <h3 class="font-display font-semibold text-fg mb-2">Google Cast support</h3>
+            <p class="text-sm text-fg/60">Cast any resolved stream URL directly to a Chromecast. Compatible with the default Google media receiver — no custom app required.</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         HOW IT WORKS
+         ============================================================ -->
+    <section id="how-it-works" class="py-20" aria-labelledby="how-heading">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-14">
+          <h2 id="how-heading" class="font-display text-3xl sm:text-4xl font-bold text-fg mb-3">How it works</h2>
+          <p class="text-fg/60 text-lg max-w-xl mx-auto">From search query to stream URL in four steps.</p>
+        </div>
+
+        <ol class="relative border-l border-border space-y-10 ml-4 sm:ml-8" aria-label="How stream-frontend works">
+
+          <li class="ml-8">
+            <span class="absolute -left-3 flex items-center justify-center w-6 h-6 bg-primary rounded-full ring-4 ring-canvas text-xs font-bold text-white" aria-hidden="true">1</span>
+            <div class="bg-surface border border-border rounded-xl p-5 sm:p-6 max-w-2xl">
+              <h3 class="font-display font-semibold text-fg mb-1">Configure your backend</h3>
+              <p class="text-sm text-fg/60">Point <code class="text-xs bg-muted text-secondary px-1 rounded">REACT_APP_API_URL</code> at a compatible torrent-search / streaming backend API. The frontend delegates all indexer scraping, database operations, and Real-Debrid proxying to it.</p>
+            </div>
+          </li>
+
+          <li class="ml-8">
+            <span class="absolute -left-3 flex items-center justify-center w-6 h-6 bg-primary rounded-full ring-4 ring-canvas text-xs font-bold text-white" aria-hidden="true">2</span>
+            <div class="bg-surface border border-border rounded-xl p-5 sm:p-6 max-w-2xl">
+              <h3 class="font-display font-semibold text-fg mb-1">Sign in with Google</h3>
+              <p class="text-sm text-fg/60">The backend handles Google OAuth. After login, a bearer token is stored in <code class="text-xs bg-muted text-secondary px-1 rounded">sessionStorage</code> and attached to every API request. Your Real-Debrid API key (if provided) is stored server-side only.</p>
+            </div>
+          </li>
+
+          <li class="ml-8">
+            <span class="absolute -left-3 flex items-center justify-center w-6 h-6 bg-primary rounded-full ring-4 ring-canvas text-xs font-bold text-white" aria-hidden="true">3</span>
+            <div class="bg-surface border border-border rounded-xl p-5 sm:p-6 max-w-2xl">
+              <h3 class="font-display font-semibold text-fg mb-1">Search and browse</h3>
+              <p class="text-sm text-fg/60">Type a query, select an indexer, apply quality or seeder filters, and paginate results. All search parameters live in the URL — results pages are bookmarkable and shareable.</p>
+            </div>
+          </li>
+
+          <li class="ml-8">
+            <span class="absolute -left-3 flex items-center justify-center w-6 h-6 bg-cta rounded-full ring-4 ring-canvas text-xs font-bold text-white" aria-hidden="true">4</span>
+            <div class="bg-surface border border-cta/30 rounded-xl p-5 sm:p-6 max-w-2xl">
+              <h3 class="font-display font-semibold text-fg mb-1">Stream or save</h3>
+              <p class="text-sm text-fg/60">Click a result to view details and the magnet link. Add to favourites or stored links, or hit Stream to resolve a Real-Debrid direct URL and play in the built-in Video.js player — or cast to your TV via Chromecast.</p>
+            </div>
+          </li>
+
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CONFIGURATION HIGHLIGHTS
+         ============================================================ -->
+    <section class="py-20 bg-surface/30" aria-labelledby="config-heading">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-14">
+          <h2 id="config-heading" class="font-display text-3xl sm:text-4xl font-bold text-fg mb-3">Configuration highlights</h2>
+          <p class="text-fg/60 text-lg max-w-xl mx-auto">All settings are injected at build time — no config files needed at runtime.</p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-4 max-w-4xl mx-auto">
+          <div class="bg-surface border border-border rounded-xl p-5">
+            <code class="text-xs text-secondary font-mono">REACT_APP_API_URL</code>
+            <p class="text-sm text-fg/60 mt-1">Backend API base URL. Required. Set via <code class="text-xs bg-muted px-1 rounded">--build-arg</code> in Docker or as a CI environment variable.</p>
+          </div>
+          <div class="bg-surface border border-border rounded-xl p-5">
+            <code class="text-xs text-secondary font-mono">REACT_APP_USE_BACKEND_FIRST</code>
+            <p class="text-sm text-fg/60 mt-1">Defaults to <code class="text-xs bg-muted px-1 rounded">true</code>. Reads favourites and links from the backend first; falls back to localStorage on failure.</p>
+          </div>
+          <div class="bg-surface border border-border rounded-xl p-5">
+            <code class="text-xs text-secondary font-mono">REACT_APP_SHOW_CONSOLE_LOGS</code>
+            <p class="text-sm text-fg/60 mt-1">Set to <code class="text-xs bg-muted px-1 rounded">OFF</code> to enable browser console logs (counterintuitive: ON = suppressed, OFF = visible).</p>
+          </div>
+          <div class="bg-surface border border-border rounded-xl p-5">
+            <code class="text-xs text-secondary font-mono">REACT_APP_CAST_RECEIVER_APP_ID</code>
+            <p class="text-sm text-fg/60 mt-1">Chromecast receiver app ID. Defaults to Google's Default Media Receiver — works without a custom receiver app.</p>
+          </div>
+        </div>
+
+        <div class="text-center mt-8">
+          <a href="configuration.md" class="inline-flex items-center gap-2 text-sm text-cta hover:text-secondary transition-colors font-medium">
+            Full configuration reference
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         MOCK UI STRIP (CSS "Screenshots")
+         ============================================================ -->
+    <section class="py-20 overflow-hidden" aria-label="App interface preview">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-12">
+        <h2 class="font-display text-3xl font-bold text-fg mb-3">Dark. Fast. Focused.</h2>
+        <p class="text-fg/60 max-w-lg mx-auto">A media-app-grade UI built for speed and clarity on any screen size.</p>
+      </div>
+
+      <div class="flex gap-4 overflow-x-auto pb-4 px-4 sm:px-6 lg:px-8 snap-x snap-mandatory" aria-label="Scrollable interface previews">
+
+        <!-- Mock: Search results -->
+        <div class="snap-center flex-shrink-0 w-72 sm:w-80 bg-surface border border-border rounded-2xl overflow-hidden" aria-label="Search results view">
+          <div class="bg-muted px-4 py-2 flex items-center gap-2 border-b border-border">
+            <div class="w-2 h-2 rounded-full bg-primary"></div>
+            <span class="text-xs text-dim font-mono">Search results</span>
+          </div>
+          <div class="p-4 space-y-3">
+            <div class="h-8 bg-muted border border-border rounded-lg w-full"></div>
+            <div class="flex gap-2 flex-wrap">
+              <div class="h-6 w-16 bg-primary/20 rounded-full border border-primary/30"></div>
+              <div class="h-6 w-12 bg-muted rounded-full"></div>
+              <div class="h-6 w-20 bg-muted rounded-full"></div>
+            </div>
+            <div class="space-y-2">
+              <div class="bg-canvas border border-border rounded-xl p-3 flex gap-2">
+                <div class="w-8 h-11 bg-gradient-to-br from-primary/40 to-muted rounded"></div>
+                <div class="space-y-1.5 flex-1">
+                  <div class="h-2 bg-border rounded w-4/5"></div>
+                  <div class="h-1.5 bg-muted rounded w-1/2"></div>
+                  <div class="h-1.5 bg-green-900/60 rounded w-8 mt-1"></div>
+                </div>
+              </div>
+              <div class="bg-canvas border border-border rounded-xl p-3 flex gap-2 opacity-70">
+                <div class="w-8 h-11 bg-gradient-to-br from-cta/30 to-muted rounded"></div>
+                <div class="space-y-1.5 flex-1">
+                  <div class="h-2 bg-border rounded w-3/5"></div>
+                  <div class="h-1.5 bg-muted rounded w-2/5"></div>
+                </div>
+              </div>
+              <div class="bg-canvas border border-border rounded-xl p-3 flex gap-2 opacity-40">
+                <div class="w-8 h-11 bg-muted rounded"></div>
+                <div class="space-y-1.5 flex-1">
+                  <div class="h-2 bg-border rounded w-3/4"></div>
+                  <div class="h-1.5 bg-muted rounded w-1/3"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mock: Detail modal -->
+        <div class="snap-center flex-shrink-0 w-72 sm:w-80 bg-surface border border-border rounded-2xl overflow-hidden" aria-label="Torrent detail view">
+          <div class="bg-muted px-4 py-2 flex items-center gap-2 border-b border-border">
+            <div class="w-2 h-2 rounded-full bg-secondary"></div>
+            <span class="text-xs text-dim font-mono">Torrent details</span>
+          </div>
+          <div class="p-4 space-y-3">
+            <div class="flex gap-3">
+              <div class="w-16 h-24 bg-gradient-to-br from-primary/40 to-muted rounded-lg flex-shrink-0"></div>
+              <div class="space-y-2 flex-1">
+                <div class="h-2.5 bg-border rounded w-full"></div>
+                <div class="h-2 bg-muted rounded w-3/4"></div>
+                <div class="flex gap-1 mt-2">
+                  <div class="h-5 w-12 bg-green-900/60 border border-green-700/30 rounded text-center"></div>
+                  <div class="h-5 w-12 bg-muted rounded"></div>
+                </div>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <div class="flex-1 h-9 bg-primary/80 rounded-lg"></div>
+              <div class="h-9 w-9 bg-muted rounded-lg border border-border"></div>
+              <div class="h-9 w-9 bg-muted rounded-lg border border-border"></div>
+            </div>
+            <div class="space-y-1.5">
+              <div class="h-2 bg-border rounded w-full"></div>
+              <div class="h-2 bg-border rounded w-5/6"></div>
+              <div class="h-2 bg-muted rounded w-2/3"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mock: Favourites -->
+        <div class="snap-center flex-shrink-0 w-72 sm:w-80 bg-surface border border-border rounded-2xl overflow-hidden" aria-label="Favourites view">
+          <div class="bg-muted px-4 py-2 flex items-center gap-2 border-b border-border">
+            <div class="w-2 h-2 rounded-full bg-cta"></div>
+            <span class="text-xs text-dim font-mono">Favourites</span>
+          </div>
+          <div class="p-4 space-y-2">
+            <div class="h-6 w-1/3 bg-border rounded mb-3"></div>
+            <div class="bg-canvas border border-border rounded-xl p-3 flex gap-2">
+              <div class="w-8 h-11 bg-gradient-to-br from-primary/30 to-muted rounded flex-shrink-0"></div>
+              <div class="space-y-1.5 flex-1">
+                <div class="h-2 bg-border rounded w-3/4"></div>
+                <div class="h-1.5 bg-muted rounded w-1/2"></div>
+              </div>
+              <div class="w-5 h-5 flex-shrink-0 text-primary/60">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              </div>
+            </div>
+            <div class="bg-canvas border border-border rounded-xl p-3 flex gap-2 opacity-80">
+              <div class="w-8 h-11 bg-gradient-to-br from-cta/20 to-muted rounded flex-shrink-0"></div>
+              <div class="space-y-1.5 flex-1">
+                <div class="h-2 bg-border rounded w-2/3"></div>
+                <div class="h-1.5 bg-muted rounded w-2/5"></div>
+              </div>
+              <div class="w-5 h-5 flex-shrink-0 text-primary/60">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              </div>
+            </div>
+            <div class="bg-canvas border border-border rounded-xl p-3 flex gap-2 opacity-50">
+              <div class="w-8 h-11 bg-muted rounded flex-shrink-0"></div>
+              <div class="space-y-1.5 flex-1">
+                <div class="h-2 bg-border rounded w-4/5"></div>
+                <div class="h-1.5 bg-muted rounded w-1/3"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         QUICKSTART / DEPLOY
+         ============================================================ -->
+    <section id="quickstart" class="py-20 bg-surface/30" aria-labelledby="quickstart-heading">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 id="quickstart-heading" class="font-display text-3xl sm:text-4xl font-bold text-fg mb-3">Quickstart</h2>
+          <p class="text-fg/60 text-lg">Up and running in under five minutes.</p>
+        </div>
+
+        <div class="space-y-6">
+
+          <!-- Step 1 -->
+          <div class="bg-surface border border-border rounded-2xl overflow-hidden">
+            <div class="flex items-center gap-3 px-5 py-4 border-b border-border bg-muted/50">
+              <span class="w-7 h-7 rounded-full bg-primary text-white text-sm font-bold flex items-center justify-center flex-shrink-0" aria-hidden="true">1</span>
+              <h3 class="font-display font-semibold text-fg">Clone the repository</h3>
+            </div>
+            <pre class="p-5 text-sm font-mono text-secondary overflow-x-auto"><code>git clone https://github.com/akshatsinghkaushik/stream-frontend.git
+cd stream-frontend</code></pre>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="bg-surface border border-border rounded-2xl overflow-hidden">
+            <div class="flex items-center gap-3 px-5 py-4 border-b border-border bg-muted/50">
+              <span class="w-7 h-7 rounded-full bg-primary text-white text-sm font-bold flex items-center justify-center flex-shrink-0" aria-hidden="true">2</span>
+              <h3 class="font-display font-semibold text-fg">Build the Docker image</h3>
+            </div>
+            <pre class="p-5 text-sm font-mono text-secondary overflow-x-auto"><code>docker build \
+  --build-arg REACT_APP_API_URL=https://your-backend.example.com \
+  --build-arg REACT_APP_BACKEND_URL=https://your-backend.example.com \
+  -t stream-frontend .</code></pre>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="bg-surface border border-border rounded-2xl overflow-hidden">
+            <div class="flex items-center gap-3 px-5 py-4 border-b border-border bg-muted/50">
+              <span class="w-7 h-7 rounded-full bg-cta text-white text-sm font-bold flex items-center justify-center flex-shrink-0" aria-hidden="true">3</span>
+              <h3 class="font-display font-semibold text-fg">Run the container</h3>
+            </div>
+            <pre class="p-5 text-sm font-mono text-secondary overflow-x-auto"><code>docker run -p 3000:80 stream-frontend
+# Open http://localhost:3000</code></pre>
+          </div>
+
+          <!-- Step 4: local dev -->
+          <div class="bg-surface border border-border rounded-2xl overflow-hidden">
+            <div class="flex items-center gap-3 px-5 py-4 border-b border-border bg-muted/50">
+              <span class="w-7 h-7 rounded-full bg-muted border border-border text-fg text-sm font-bold flex items-center justify-center flex-shrink-0" aria-hidden="true">4</span>
+              <h3 class="font-display font-semibold text-fg">Or run locally</h3>
+            </div>
+            <pre class="p-5 text-sm font-mono text-secondary overflow-x-auto"><code>cp .env.example .env.local
+# Set REACT_APP_API_URL in .env.local
+
+npm ci
+npm start       # http://localhost:3000</code></pre>
+          </div>
+
+        </div>
+
+        <div class="text-center mt-8">
+          <a href="development.md" class="inline-flex items-center gap-2 text-sm text-cta hover:text-secondary transition-colors font-medium">
+            Full development guide
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         FAQ
+         ============================================================ -->
+    <section id="faq" class="py-20" aria-labelledby="faq-heading">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 id="faq-heading" class="font-display text-3xl sm:text-4xl font-bold text-fg mb-3">Frequently asked questions</h2>
+        </div>
+
+        <div class="space-y-3" role="list">
+
+          <details class="bg-surface border border-border rounded-xl group" role="listitem">
+            <summary class="px-5 py-4 font-semibold text-fg cursor-pointer list-none flex items-center justify-between gap-3 hover:text-secondary transition-colors">
+              What backend does this UI require?
+              <svg class="w-4 h-4 flex-shrink-0 text-dim transition-transform group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <div class="px-5 pb-5 text-sm text-fg/70">
+              stream-frontend requires a compatible torrent-search and streaming backend API, configured via the <code class="text-xs bg-muted text-secondary px-1 rounded">REACT_APP_API_URL</code> environment variable at build time. The frontend project does not include or operate a backend service.
+            </div>
+          </details>
+
+          <details class="bg-surface border border-border rounded-xl group" role="listitem">
+            <summary class="px-5 py-4 font-semibold text-fg cursor-pointer list-none flex items-center justify-between gap-3 hover:text-secondary transition-colors">
+              Is a Real-Debrid account required?
+              <svg class="w-4 h-4 flex-shrink-0 text-dim transition-transform group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <div class="px-5 pb-5 text-sm text-fg/70">
+              No. You can search and browse torrents without Real-Debrid. The Real-Debrid integration is optional and enables resolving magnet links into direct stream URLs. Without it, you can still copy magnet links and open them in a torrent client.
+            </div>
+          </details>
+
+          <details class="bg-surface border border-border rounded-xl group" role="listitem">
+            <summary class="px-5 py-4 font-semibold text-fg cursor-pointer list-none flex items-center justify-between gap-3 hover:text-secondary transition-colors">
+              Where is my Real-Debrid API key stored?
+              <svg class="w-4 h-4 flex-shrink-0 text-dim transition-transform group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <div class="px-5 pb-5 text-sm text-fg/70">
+              Server-side only. It is saved to the backend database when you submit it in Account Settings and is never written to <code class="text-xs bg-muted text-secondary px-1 rounded">localStorage</code>, <code class="text-xs bg-muted text-secondary px-1 rounded">sessionStorage</code>, or any browser cookie. See the <a href="privacy.html" class="text-cta underline hover:text-secondary">privacy policy</a> for full details.
+            </div>
+          </details>
+
+          <details class="bg-surface border border-border rounded-xl group" role="listitem">
+            <summary class="px-5 py-4 font-semibold text-fg cursor-pointer list-none flex items-center justify-between gap-3 hover:text-secondary transition-colors">
+              Does it work in private / incognito mode?
+              <svg class="w-4 h-4 flex-shrink-0 text-dim transition-transform group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <div class="px-5 pb-5 text-sm text-fg/70">
+              Yes. When the app detects a private browsing context (where localStorage is unavailable or severely quota-limited), it automatically switches to backend-only storage mode. All data is fetched from and saved to the backend, with no browser storage used. A notification banner is shown when this mode is active.
+            </div>
+          </details>
+
+          <details class="bg-surface border border-border rounded-xl group" role="listitem">
+            <summary class="px-5 py-4 font-semibold text-fg cursor-pointer list-none flex items-center justify-between gap-3 hover:text-secondary transition-colors">
+              Can I use this on mobile?
+              <svg class="w-4 h-4 flex-shrink-0 text-dim transition-transform group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <div class="px-5 pb-5 text-sm text-fg/70">
+              Yes. The standard build is responsive and works in mobile browsers. There is also a dedicated Android build target (<code class="text-xs bg-muted text-secondary px-1 rounded">npm run build:android</code>) that activates touch optimisations, larger tap targets, and a condensed layout — suitable for loading in a WebView.
+            </div>
+          </details>
+
+          <details class="bg-surface border border-border rounded-xl group" role="listitem">
+            <summary class="px-5 py-4 font-semibold text-fg cursor-pointer list-none flex items-center justify-between gap-3 hover:text-secondary transition-colors">
+              What licence is this released under?
+              <svg class="w-4 h-4 flex-shrink-0 text-dim transition-transform group-open:rotate-180" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="6 9 12 15 18 9"/></svg>
+            </summary>
+            <div class="px-5 pb-5 text-sm text-fg/70">
+              GNU General Public License v3.0 or later (GPL-3.0-or-later). You are free to use, modify, and distribute it under the same terms. See the <code class="text-xs bg-muted text-secondary px-1 rounded">LICENSE</code> file in the repository.
+            </div>
+          </details>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="border-t border-border bg-surface py-12" role="contentinfo">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div class="grid sm:grid-cols-3 gap-8 mb-10">
+
+        <!-- Brand -->
+        <div>
+          <div class="flex items-center gap-2 mb-3">
+            <svg class="w-7 h-7" viewBox="0 0 64 64" fill="none" aria-hidden="true" focusable="false">
+              <rect width="64" height="64" rx="12" fill="#0B1120"/>
+              <circle cx="32" cy="32" r="18" stroke="#E11D48" stroke-width="3"/>
+              <circle cx="32" cy="32" r="8" fill="#E11D48"/>
+            </svg>
+            <span class="font-display font-semibold text-fg">stream-frontend</span>
+          </div>
+          <p class="text-xs text-dim leading-relaxed">Open-source torrent search and streaming UI. Self-hosted, GPL-3.0.</p>
+        </div>
+
+        <!-- Docs links -->
+        <div>
+          <h3 class="text-xs font-semibold text-fg uppercase tracking-wider mb-3">Documentation</h3>
+          <nav aria-label="Documentation links">
+            <ul class="space-y-2">
+              <li><a href="architecture.md" class="text-sm text-dim hover:text-secondary transition-colors">Architecture</a></li>
+              <li><a href="code-structure.md" class="text-sm text-dim hover:text-secondary transition-colors">Code structure</a></li>
+              <li><a href="configuration.md" class="text-sm text-dim hover:text-secondary transition-colors">Configuration</a></li>
+              <li><a href="data-and-api.md" class="text-sm text-dim hover:text-secondary transition-colors">Data and API</a></li>
+              <li><a href="development.md" class="text-sm text-dim hover:text-secondary transition-colors">Development</a></li>
+            </ul>
+          </nav>
+        </div>
+
+        <!-- Project links -->
+        <div>
+          <h3 class="text-xs font-semibold text-fg uppercase tracking-wider mb-3">Project</h3>
+          <nav aria-label="Project links">
+            <ul class="space-y-2">
+              <li>
+                <a href="https://github.com/akshatsinghkaushik/stream-frontend" class="text-sm text-dim hover:text-secondary transition-colors flex items-center gap-2">
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                  GitHub
+                </a>
+              </li>
+              <li><a href="https://github.com/akshatsinghkaushik/stream-frontend/issues" class="text-sm text-dim hover:text-secondary transition-colors">Issues</a></li>
+              <li><a href="privacy.html" class="text-sm text-dim hover:text-secondary transition-colors">Privacy policy</a></li>
+              <li><a href="https://github.com/akshatsinghkaushik/stream-frontend/blob/main/LICENSE" class="text-sm text-dim hover:text-secondary transition-colors">GPL-3.0 License</a></li>
+            </ul>
+          </nav>
+        </div>
+
+      </div>
+
+      <div class="border-t border-border pt-6 flex flex-col sm:flex-row items-center gap-2 text-xs text-dim">
+        <span>Released under the <abbr title="GNU General Public License version 3 or later">GPL-3.0-or-later</abbr> license.</span>
+        <span class="hidden sm:block mx-2" aria-hidden="true">&middot;</span>
+        <a href="https://akshatsinghkaushik.github.io/stream-frontend/" class="hover:text-secondary transition-colors">akshatsinghkaushik.github.io/stream-frontend</a>
+      </div>
+
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,519 @@
+/**
+ * Android WebView Optimizations
+ * Mobile-responsive design improvements and touch-friendly interactions
+ */
+
+/* Global mobile overflow fixes */
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+  box-sizing: border-box;
+}
+
+/* Fix for common overflow issues */
+.MuiContainer-root {
+  max-width: 100vw !important;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+  box-sizing: border-box;
+}
+
+.MuiGrid-container {
+  max-width: 100% !important;
+  box-sizing: border-box;
+}
+
+/* Android WebView specific styles */
+.android-webview {
+  /* Prevent text selection on touch */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  /* Improve touch scrolling */
+  -webkit-overflow-scrolling: touch;
+
+  /* Prevent zoom on input focus */
+  -webkit-text-size-adjust: 100%;
+
+  /* Improve font rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Touch-friendly button styles */
+.touch-button {
+  min-height: 44px; /* iOS/Android recommended minimum touch target */
+  min-width: 44px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  /* Prevent text selection */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+
+  /* Improve touch feedback */
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+}
+
+.touch-button:active {
+  transform: scale(0.98);
+  opacity: 0.8;
+}
+
+/* Mobile-optimized input fields */
+.mobile-input {
+  font-size: 16px; /* Prevent zoom on iOS */
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+
+  /* Improve touch interaction */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.mobile-input:focus {
+  outline: none;
+  border-color: #007aff;
+  box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.2);
+}
+
+/* Mobile-responsive grid layouts */
+.mobile-grid {
+  display: grid;
+  gap: 16px;
+  padding: 16px;
+}
+
+@media (max-width: 768px) {
+  .mobile-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 12px;
+  }
+}
+
+/* Touch-friendly card components */
+.mobile-card {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  cursor: pointer;
+
+  /* Prevent text selection */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.mobile-card:active {
+  transform: scale(0.98);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile navigation improvements */
+.mobile-nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 8px 16px;
+}
+
+/* Mobile-optimized search form */
+.mobile-search-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+}
+
+@media (min-width: 768px) {
+  .mobile-search-form {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+}
+
+/* Touch-friendly dropdown selectors */
+.mobile-select {
+  font-size: 16px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: white;
+  cursor: pointer;
+
+  /* Improve touch interaction */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  /* Add custom arrow */
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 12px center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  padding-right: 40px;
+}
+
+/* Mobile-optimized torrent results */
+.mobile-torrent-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  padding: 16px;
+  width: 100%;
+  max-width: 100vw;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+@media (min-width: 768px) {
+  .mobile-torrent-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+@media (min-width: 1200px) {
+  .mobile-torrent-grid {
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  }
+}
+
+/* Touch-friendly torrent cards */
+.mobile-torrent-card {
+  background: #2d2d2d;
+  border-radius: 12px;
+  padding: 16px;
+  color: white;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  max-width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  /* Prevent text selection */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+
+  /* Improve touch feedback */
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0.1);
+}
+
+.mobile-torrent-card:active {
+  transform: scale(0.98);
+  background: #3d3d3d;
+}
+
+/* Mobile-optimized modal dialogs */
+.mobile-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 16px;
+}
+
+.mobile-modal-content {
+  background: white;
+  border-radius: 12px;
+  max-width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+
+  /* Improve scrolling on mobile */
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 768px) {
+  .mobile-modal-content {
+    width: 100%;
+    height: 90vh;
+    border-radius: 12px 12px 0 0;
+    margin-top: auto;
+  }
+}
+
+/* Touch-friendly close button */
+.mobile-close-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.1);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #666;
+  transition: all 0.2s ease;
+}
+
+.mobile-close-button:active {
+  background: rgba(0, 0, 0, 0.2);
+  transform: scale(0.95);
+}
+
+/* Mobile-optimized pagination */
+.mobile-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  flex-wrap: wrap;
+}
+
+.mobile-pagination-button {
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: white;
+  color: #333;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.mobile-pagination-button:active {
+  transform: scale(0.95);
+  background: #f0f0f0;
+}
+
+.mobile-pagination-button.active {
+  background: #007aff;
+  color: white;
+  border-color: #007aff;
+}
+
+/* Mobile-optimized loading states */
+.mobile-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  text-align: center;
+}
+
+.mobile-loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #007aff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Mobile-optimized error states */
+.mobile-error {
+  background: #ffebee;
+  border: 1px solid #f44336;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px;
+  color: #c62828;
+  text-align: center;
+}
+
+.mobile-error-retry {
+  background: #f44336;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  margin-top: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mobile-error-retry:active {
+  background: #d32f2f;
+  transform: scale(0.98);
+}
+
+/* Accessibility improvements */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus indicators for keyboard navigation */
+.focus-visible {
+  outline: 2px solid #007aff;
+  outline-offset: 2px;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .mobile-card {
+    background: #2d2d2d;
+    color: white;
+  }
+
+  .mobile-input,
+  .mobile-select {
+    background: #2d2d2d;
+    color: white;
+    border-color: #555;
+  }
+
+  .mobile-modal-content {
+    background: #1e1e1e;
+    color: white;
+  }
+}
+
+/* Additional mobile overflow fixes */
+@media (max-width: 768px) {
+  /* Fix header layout on mobile */
+  .MuiAppBar-root .MuiToolbar-root {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    padding: 16px !important;
+    min-height: auto !important;
+  }
+
+  .MuiAppBar-root .MuiButton-root {
+    justify-content: flex-start !important;
+    margin-bottom: 4px !important;
+    padding: 8px 16px !important;
+    min-height: 40px !important;
+    width: 100% !important;
+  }
+
+  /* Fix container overflow on mobile */
+  .MuiContainer-root {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    max-width: none !important;
+    width: 100% !important;
+  }
+
+  /* Fix card overflow */
+  .MuiCard-root {
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+
+  /* Fix grid spacing */
+  .MuiGrid-container {
+    margin: 0 !important;
+    width: 100% !important;
+  }
+
+  .MuiGrid-item {
+    padding: 4px !important;
+    max-width: 100% !important;
+  }
+
+  /* Fix paper component overflow */
+  .MuiPaper-root {
+    max-width: 100% !important;
+    margin: 0 !important;
+    border-radius: 8px !important;
+  }
+
+  /* Fix any text overflow */
+  h1, h2, h3, h4, h5, h6 {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+  }
+
+  /* Fix button overflow */
+  .MuiButton-root {
+    max-width: 100%;
+    word-wrap: break-word;
+  }
+}
+
+/* Extra small mobile devices - force vertical layout */
+@media (max-width: 600px) {
+  .MuiAppBar-root .MuiToolbar-root {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    padding: 12px !important;
+  }
+
+  .MuiAppBar-root .MuiTypography-h6 {
+    text-align: center !important;
+    margin-bottom: 12px !important;
+    font-size: 1.1rem !important;
+  }
+
+  .MuiAppBar-root .MuiButton-root {
+    justify-content: flex-start !important;
+    margin-bottom: 6px !important;
+    padding: 10px 16px !important;
+    min-height: 44px !important;
+    width: 100% !important;
+    border-radius: 8px !important;
+  }
+
+  /* Ensure header navigation box takes full width */
+  .MuiAppBar-root .MuiBox-root {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+  }
+}

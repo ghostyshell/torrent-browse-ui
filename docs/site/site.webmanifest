@@ -1,0 +1,17 @@
+{
+  "name": "stream-frontend",
+  "short_name": "StreamUI",
+  "description": "Open-source torrent search and streaming UI — React 19, Real-Debrid ready, Docker-deployable",
+  "start_url": "/stream-frontend/",
+  "display": "standalone",
+  "background_color": "#0B1120",
+  "theme_color": "#E11D48",
+  "icons": [
+    {
+      "src": "/stream-frontend/site/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
